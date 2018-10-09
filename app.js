@@ -23,5 +23,23 @@ app.get("/authors", (req, res, next) => {
     .then(authors => res.json({authors: authors}))
 });
 
+app.post("/books", (req, res, next) => {
+  queries.createBook(req.body)
+    .then(book => res.json(book))
+});
+
+app.post("/authors", (req, res, next) => {
+  queries.createAuthor(req.body)
+    .then(author => res.json(author))
+});
+
+app.post("/", (req, res, next) => {
+  let author_id
+  let book_id
+  queries.createAuthor(req.body)
+    .then(author => author_id = author.id)
+    .then (queries.createBook(req.body))
+    .then(book => res.json(book))
+});
 
 app.listen(port, () => console.log(`Listening on port ${port}`));

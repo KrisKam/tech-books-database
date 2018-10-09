@@ -10,24 +10,32 @@ const getAllInfo = () => {
 
 const getAllBooks = () => {
   return knex
-  .from("book_author")
-  .join("books", "book_author.book_id", "=", "books.id")
-  .join("authors", "book_author.author_id", "=", "authors.id")
-  .select("book_author.book_id", "book_author.author_id", "books.title", "books.cover", "books.genre", "books.description", "authors.authorFirst", "authors.authorLast")
+    .select()
+    .from("books")
 }
 
 const getAllAuthors = () => {
   return knex
-  .from("book_author")
-  .join("books", "book_author.book_id", "=", "books.id")
-  .join("authors", "book_author.author_id", "=", "authors.id")
-  .select("book_author.book_id", "book_author.author_id", "authors.authorFirst", "authors.authorLast", "authors.portrait", "authors.bio", "books.title")
+    .select()
+    .from("authors")
+}
+
+const createBook = (newBook) => {
+  return knex("books")
+    .insert(newBook, ["id", "title", "cover", "genre", "description"])
+}
+
+const createAuthor = (newAuthor) => {
+  return knex("authors")
+    .insert(newAuthor, ["id", "authorFirst", "authorLast", "portrait", "bio"])
 }
 
 module.exports = {
 
   getAllInfo,
   getAllBooks,
-  getAllAuthors
+  getAllAuthors,
+  createBook,
+  createAuthor
 
 }
