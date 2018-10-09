@@ -8,7 +8,7 @@ module.exports = {
 
   production: {
     client: "pg",
-    connection: process.env.DATABASE_url + "ssl=true"
+    connection: process.env.DATABASE_url
   }
 
 };
