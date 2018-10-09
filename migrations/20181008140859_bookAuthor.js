@@ -1,11 +1,9 @@
 
 exports.up = function(knex, Promise) {
   return knex.schema.createTable("book_author", (entry) => {
-    entry.increments("id").primary();
-    entry.integer("book_id");
-    entry.foreign("book_id").references("id").inTable("books");
-    entry.integer("author_id");
-    entry.foreign("author_id").references("id").inTable("authors")
+    entry.integer("book_id").references("books.id").onDelete("CASCADE");
+    entry.integer("author_id").references("authors.id").onDelete("CASCADE");
+    entry.primary(["book_id", "author_id"])
   })
 };
 

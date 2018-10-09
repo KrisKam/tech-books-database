@@ -1,22 +1,32 @@
 const connection = require("./knexfile")[process.env.NODE_ENV || "development"];
 const knex = require("knex")(connection);
 
-getAllBooks = () => {
+const getAllInfo = () => {
   return knex
-    .select()
-    .from("books")
-    .orderBy("id", "desc")
+    .from("book_author")
+    .join("books", "book_author.book_id", "=", "books.id")
+    .join("authors", "book_author.author_id", "=", "authors.id")
 };
 
-getAllAuthors = () => {
+const getAllBooks = () => {
   return knex
-    .select()
-    .from("authors")
-    .orderBy("id", "desc")
+  .from("book_author")
+  .join("books", "book_author.book_id", "=", "books.id")
+  .join("authors", "book_author.author_id", "=", "authors.id")
+  .select("book_author.book_id", "book_author.author_id", "books.title", "books.cover", "books.genre", "books.description", "authors.authorFirst", "authors.authorLast")
+}
+
+const getAllAuthors = () => {
+  return knex
+  .from("book_author")
+  .join("books", "book_author.book_id", "=", "books.id")
+  .join("authors", "book_author.author_id", "=", "authors.id")
+  .select("book_author.book_id", "book_author.author_id", "authors.authorFirst", "authors.authorLast", "authors.portrait", "authors.bio", "books.title")
 }
 
 module.exports = {
 
+  getAllInfo,
   getAllBooks,
   getAllAuthors
 
