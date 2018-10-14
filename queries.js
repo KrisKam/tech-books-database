@@ -12,12 +12,14 @@ const getAllBooks = () => {
   return knex
     .select()
     .from("books")
+    .join("book_author", "book_author.book_id", "=", "books.id")
 }
 
 const getAllAuthors = () => {
   return knex
     .select()
     .from("authors")
+    .join("book_author", "book_author.author_id", "=", "authors.id")
 }
 
 const createBook = (newBook) => {
